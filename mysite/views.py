@@ -1,6 +1,8 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from places.models import Place, Image
+from django.http.response import JsonResponse
+from django.urls import reverse
 
 def show_main(request):
     places = Place.objects.all()
@@ -18,11 +20,26 @@ def show_main(request):
                     "properties": {
                         "title": place.title,
                         "placeId": place.id,
-                        "detailsUrl": "https://raw.githubusercontent.com/devmanorg/where-to-go-frontend/master/places/roofs24.json"
+                         'detailsUrl': reverse(get_place, args=[place.id])
                     }
                 }
             ]
         }
         places_description.append(description)
-
     return render(request, 'index.html', {'places_geojson': places_description})
+
+def get_place(request, place_id):
+    place = get_object_or_404(Place, pk=place_id)
+    content = {
+        'title': place.title,
+        'imgs': [item.image.url for item in place.images.all()],
+        'description_short': place.description_short,
+        'description_long': place.description_long,
+        'coordinates': {
+            'lat': place.lat,
+            'lng': place.lng,
+        },
+    }
+    return JsonResponse(content,
+                        json_dumps_params={'ensure_ascii': False, 'indent': 2}
+    )
