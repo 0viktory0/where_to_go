@@ -28,7 +28,7 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
-        for place_url in options['json_url'].pop().split('+'):
+        for place_url in options['json_url']:
             try:
                 place_response = requests.get(place_url)
                 place_response.raise_for_status()
