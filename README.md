@@ -41,14 +41,9 @@ python manage.py runserver
 
 Для добавления новых локаций можно использовать панель администратора
 или использовать команду из терминала:
-* Для загрузки локального JSON файла:
-```
-python manage.py load_place --file my_place.json
-```
 
-* Для загрузки JSON файла по внешней ссылке:
 ```
-python manage.py load_place --url http://example.com/my_place.json
+python manage.py load_place  http://example.com/my_place.json
 ```
 
 ### Формат JSON файла
