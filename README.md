@@ -5,6 +5,7 @@
 
 ## Демо-версия сайта
 
+Доступна по ссылке: [Куда пойти](http://vivivi.pythonanywhere.com/)
 
 ## Запуск
 
@@ -35,10 +36,41 @@ python manage.py runserver
 - `SECRET_KEY` — секретный ключ проекта
 - `ALLOWED_HOSTS` — смотри [документацию Django](https://docs.djangoproject.com/en/3.1/ref/settings/#allowed-hosts).
 
+
 ## Добавление новых локаций
 
-Для добавления новых локаций используйте [панель администратора](https://egoista.pythonanywhere.com/admin/) 
+Для добавления новых локаций можно использовать панель администратора
+или использовать команду из терминала:
+* Для загрузки локального JSON файла:
+```
+python manage.py load_place --file my_place.json
+```
 
+* Для загрузки JSON файла по внешней ссылке:
+```
+python manage.py load_place --url http://example.com/my_place.json
+```
+
+### Формат JSON файла
+
+Для корректной работы скрипта необходим следующий формат JSON файла:
+
+```json
+{
+    "title": "Название места",
+    "imgs": [
+        "https://example.com/image1.jpg",
+        "https://example.com/image2.jpg",
+        "https://example.com/image3.jpg"
+    ],
+    "description_short": "Краткое описание места",
+    "description_long": "Полное описание локации. Допускается использование html-разметки.",
+    "coordinates": {
+        "lng": "37.50169",
+        "lat": "55.816591"
+    }
+}
+```
 
 
 ## Цели проекта
