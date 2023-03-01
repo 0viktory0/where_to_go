@@ -38,7 +38,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'site.urls'
+ROOT_URLCONF = 'mysite.urls'
 
 TEMPLATES = [
     {
@@ -56,7 +56,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'site.wsgi.application'
+WSGI_APPLICATION = 'mysite.wsgi.application'
 
 
 # Database
@@ -104,11 +104,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATIC_URL = env.str('STATIC_URL', default='/static/')
+STATICFILES_DIRS = env.list('STATICFILES_DIRS', default=[
+    BASE_DIR / 'static',
+])
 
+MEDIA_ROOT = 'media'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
