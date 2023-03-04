@@ -19,19 +19,18 @@ class Command(BaseCommand):
             try:
                 image_response = requests.get(img_url)
                 image_response.raise_for_status()
+                image_content = ContentFile(image_response.content, name=filename)
+                Image(number=order, place=place, image=image_content).save()
             except requests.exceptions.HTTPError:
                 self.stderr.write(self.style.ERROR(
                     f'Картинка по адресу {img_url} не найдена'))
-
-            image_content = ContentFile(image_response.content, name=filename)
-            Image(number=order, place=place, image=image_content).save()
 
     def handle(self, *args, **options):
         for place_url in options['json_url']:
             try:
                 place_response = requests.get(place_url)
                 place_response.raise_for_status()
-                place = place_response.json()
+                raw_place = place_response.json()
             except requests.exceptions.HTTPError:
                 self.stderr.write(self.style.ERROR(
                     f"Описание локации по адресу {options['json_url']} не найдено"))
@@ -39,12 +38,12 @@ class Command(BaseCommand):
 
             try:
                 place_created, created = Place.objects.get_or_create(
-                    title=place['title'],
-                    lng=place['coordinates']['lng'],
-                    lat=place['coordinates']['lat'],
+                    title=raw_place['title'],
+                    lng=raw_place['coordinates']['lng'],
+                    lat=raw_place['coordinates']['lat'],
                     defaults={
-                        'description_short': place.get('description_short', ''),
-                        'description_long': place.get('description_long', ''),
+                        'description_short': raw_place.get('description_short', ''),
+                        'description_long': raw_place.get('description_long', ''),
                     }
                 )
             except KeyError as exception:
@@ -53,5 +52,5 @@ class Command(BaseCommand):
                 continue
 
             if created:
-                image_urls = place.get('imgs', [])
+                image_urls = raw_place.get('imgs', [])
                 self.save_images(place_created, image_urls)
