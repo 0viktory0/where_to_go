@@ -26,7 +26,6 @@ class Command(BaseCommand):
             image_content = ContentFile(image_response.content, name=filename)
             Image(number=order, place=place, image=image_content).save()
 
-
     def handle(self, *args, **options):
         for place_url in options['json_url']:
             try:
