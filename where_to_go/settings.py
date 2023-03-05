@@ -72,7 +72,7 @@ WSGI_APPLICATION = 'where_to_go.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(os.path.join(BASE_DIR, "db.sqlite3"))
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -112,12 +112,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
     '/var/www/static/',
 ]
-STATIC_ROOT = env("STATIC_ROOT", default=BASE_DIR / "assets")
+STATIC_ROOT = env('STATIC_ROOT', default=BASE_DIR / 'assets')
 
 MEDIA_ROOT = 'media'
 MEDIA_URL = '/media/'

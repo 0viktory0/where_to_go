@@ -23,7 +23,8 @@ class Command(BaseCommand):
                 Image(number=order, place=place, image=image_content).save()
             except requests.exceptions.HTTPError:
                 self.stderr.write(self.style.ERROR(
-                    f'Картинка по адресу {img_url} не найдена'))
+                    f'Картинка по адресу {img_url} не найдена')
+                )
 
     def handle(self, *args, **options):
         for place_url in options['json_url']:
@@ -33,7 +34,8 @@ class Command(BaseCommand):
                 raw_place = place_response.json()
             except requests.exceptions.HTTPError:
                 self.stderr.write(self.style.ERROR(
-                    f"Описание локации по адресу {options['json_url']} не найдено"))
+                    f"Описание локации по адресу {options['json_url']} не найдено")
+                )
                 continue
 
             try:
@@ -48,7 +50,8 @@ class Command(BaseCommand):
                 )
             except KeyError as exception:
                 self.stderr.write(self.style.ERROR(
-                    f'Недоступно поле "{exception.args[0]}" '))
+                    f'Недоступно поле "{exception.args[0]}" ')
+                )
                 continue
 
             if created:
