@@ -39,7 +39,7 @@ class Command(BaseCommand):
                 continue
 
             try:
-                place_created, created = Place.objects.get_or_create(
+                place, created = Place.objects.get_or_create(
                     title=raw_place['title'],
                     lng=raw_place['coordinates']['lng'],
                     lat=raw_place['coordinates']['lat'],
@@ -56,4 +56,4 @@ class Command(BaseCommand):
 
             if created:
                 image_urls = raw_place.get('imgs', [])
-                self.save_images(place_created, image_urls)
+                self.save_images(place, image_urls)

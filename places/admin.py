@@ -10,9 +10,9 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
     fields = ['place', 'image', 'get_preview']
     readonly_fields = ['get_preview']
 
-    def get_preview(self, obj):
+    def get_preview(self, image):
         return format_html(
-            '<img src="{}" width="auto" height="200px" />', obj.image.url
+            '<img src="{}" width="auto" height="200px" />', image.image.url
         )
 
 

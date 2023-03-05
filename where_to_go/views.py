@@ -6,7 +6,7 @@ from django.urls import reverse
 
 def show_main(request):
     places = Place.objects.all()
-    place_description = []
+    place_descriptions = []
     for place in places:
         description = {
             'type': 'FeatureCollection',
@@ -25,8 +25,8 @@ def show_main(request):
                 }
             ]
         }
-        place_description.append(description)
-    return render(request, 'index.html', {'places_geojson': place_description})
+        place_descriptions.append(description)
+    return render(request, 'index.html', {'places_geojson': place_descriptions})
 
 
 def get_place(request, place_id):
