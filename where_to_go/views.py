@@ -15,15 +15,15 @@ def show_main(request):
                     'type': 'Feature',
                     'geometry': {
                         'type': 'Point',
-                        'coordinates': [place.lng, place.lat]
+                        'coordinates': [place.lng, place.lat],
                     },
                     'properties': {
                         'title': place.title,
                         'placeId': place.id,
-                        'detailsUrl': reverse(get_place, args=[place.id])
-                    }
-                }
-            ]
+                        'detailsUrl': reverse(get_place, args=[place.id]),
+                    },
+                },
+            ],
         }
         place_descriptions.append(description)
     return render(request, 'index.html', {'places_geojson': place_descriptions})
@@ -43,5 +43,5 @@ def get_place(request, place_id):
     }
     return JsonResponse(
         content,
-        json_dumps_params={'ensure_ascii': False, 'indent': 2}
+        json_dumps_params={'ensure_ascii': False, 'indent': 2},
     )

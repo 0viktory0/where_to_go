@@ -19,7 +19,7 @@ class Place(models.Model):
 
 class Image(models.Model):
     image = models.ImageField('Картинка')
-    number = models.PositiveIntegerField('Позиция', default=0, blank=True,)
+    number = models.PositiveIntegerField('Позиция', default=0, blank=True)
     place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name='images')
 
     class Meta(object):
